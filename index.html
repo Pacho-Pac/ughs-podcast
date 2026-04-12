@@ -1209,6 +1209,15 @@
       .dock-controls {
         grid-column: 1 / -1;
       }
+
+.about-layout {
+        grid-template-columns: 1fr !important;
+      }
+
+      .about-layout .reveal:last-child {
+        min-height: 260px !important;
+      }
+
     }
   </style>
 </head>
@@ -1416,7 +1425,7 @@
     </section>
 
     <section id="about">
-      <div class="about-layout" style="display:grid; grid-template-columns: .92fr 1.08fr; gap:16px; align-items:stretch;">
+      <div class="about-layout" style="display:grid; grid-template-columns: .92fr 1.08fr; gap:16px; align-items:stretch; min-height:500px;">
   <article class="about-panel reveal">
     <p>About</p>
     <h3>Nuestro propósito</h3>
@@ -1755,77 +1764,115 @@
       });
     }, 100);
 
-    // Easter egg — clic en el título grande
+    // EASTER EGG 1 — Clic en el título grande → tema azul baby blue
 const heroTitle = document.querySelector('.hero-copy h2');
 let easterEggActive = false;
-
-const blueTheme = {
-  '--bg': '#f0f7ff',
-  '--bg-2': '#f5faff',
-  '--panel': 'rgba(230, 241, 255, 0.66)',
-  '--panel-strong': 'rgba(230, 241, 255, 0.86)',
-  '--text': '#0c2a4a',
-  '--muted': '#4a7aaa',
-  '--line': 'rgba(55, 138, 221, 0.12)',
-  '--soft-red': '#7ab8f0',
-  '--soft-red-2': '#a8d0f5',
-  '--soft-red-3': '#e6f1fb',
-  '--shadow': '0 20px 60px rgba(55, 138, 221, 0.15)',
-};
-
-const originalTheme = {
-  '--bg': '#fff7f7',
-  '--bg-2': '#fffdfd',
-  '--panel': 'rgba(255, 255, 255, 0.66)',
-  '--panel-strong': 'rgba(255, 255, 255, 0.86)',
-  '--text': '#281d1f',
-  '--muted': '#7e666a',
-  '--line': 'rgba(150, 71, 84, 0.12)',
-  '--soft-red': '#e98e98',
-  '--soft-red-2': '#f3b2b7',
-  '--soft-red-3': '#fff0f1',
-  '--shadow': '0 20px 60px rgba(184, 92, 104, 0.12)',
-};
 
 heroTitle.style.cursor = 'pointer';
 heroTitle.addEventListener('click', () => {
   easterEggActive = !easterEggActive;
-  const theme = easterEggActive ? blueTheme : originalTheme;
   const root = document.documentElement;
 
-  Object.entries(theme).forEach(([prop, val]) => {
-    root.style.setProperty(prop, val);
-  });
-
-  // Cambiar gradientes del body
   if (easterEggActive) {
+    // Fondo general
     document.body.style.background = `
-      radial-gradient(circle at 10% 10%, rgba(55, 138, 221, 0.22), transparent 34%),
-      radial-gradient(circle at 88% 10%, rgba(133, 183, 235, 0.28), transparent 32%),
-      radial-gradient(circle at 50% 100%, rgba(181, 212, 244, 0.55), transparent 45%),
+      radial-gradient(circle at 10% 10%, rgba(55,138,221,0.22), transparent 34%),
+      radial-gradient(circle at 88% 10%, rgba(133,183,235,0.28), transparent 32%),
+      radial-gradient(circle at 50% 100%, rgba(181,212,244,0.55), transparent 45%),
       linear-gradient(180deg, #f0f7ff 0%, #f8fbff 42%, #e6f1fb 100%)
     `;
-    document.querySelector('.glow').style.background = 'radial-gradient(circle, rgba(133, 183, 235, 0.38), transparent 60%)';
-    document.querySelector('.glow-2').style.background = 'radial-gradient(circle, rgba(55, 138, 221, 0.24), transparent 58%)';
-    document.querySelector('.glow-3').style.background = 'radial-gradient(circle, rgba(181, 212, 244, 0.55), transparent 60%)';
 
-    // Cambiar gradiente del título
+    // Glows
+    document.querySelector('.glow').style.background = 'radial-gradient(circle, rgba(133,183,235,0.38), transparent 60%)';
+    document.querySelector('.glow-2').style.background = 'radial-gradient(circle, rgba(55,138,221,0.24), transparent 58%)';
+    document.querySelector('.glow-3').style.background = 'radial-gradient(circle, rgba(181,212,244,0.55), transparent 60%)';
+
+    // Título hero
     heroTitle.querySelector('span').style.background = 'linear-gradient(180deg, #185fa5, #042c53 120%)';
     heroTitle.querySelector('span').style.webkitBackgroundClip = 'text';
     heroTitle.querySelector('span').style.backgroundClip = 'text';
     heroTitle.querySelector('span').style.color = 'transparent';
 
-    // Cambiar botón principal
-    document.querySelectorAll('.btn, .play-btn, .mini-play, .dock-toggle').forEach(el => {
+    // Botones principales
+    document.querySelectorAll('.btn').forEach(el => {
       el.style.background = 'linear-gradient(180deg, #5ba7e8, #378add)';
-      el.style.boxShadow = '0 18px 40px rgba(55, 138, 221, 0.3)';
+      el.style.boxShadow = '0 18px 40px rgba(55,138,221,0.28)';
     });
 
-    // Cambiar progress bars
+    // Botones de play
+    document.querySelectorAll('.play-btn, .mini-play, .dock-toggle').forEach(el => {
+      el.style.background = 'linear-gradient(180deg, #5ba7e8, #378add)';
+      el.style.boxShadow = '0 18px 40px rgba(55,138,221,0.28)';
+    });
+
+    // Progress bars
     document.querySelectorAll('.progress-fill, .dock-line > div').forEach(el => {
       el.style.background = 'linear-gradient(90deg, #378add, #85b7eb)';
     });
+
+    // Eyebrow badge
+    document.querySelectorAll('.eyebrow').forEach(el => {
+      el.style.color = '#185fa5';
+    });
+
+    // Sparkle dot
+    document.querySelectorAll('.sparkle').forEach(el => {
+      el.style.background = 'linear-gradient(135deg, #378add, #85b7eb)';
+      el.style.boxShadow = '0 0 20px rgba(55,138,221,0.5)';
+    });
+
+    // Player top background
+    document.querySelectorAll('.player-top').forEach(el => {
+      el.style.background = 'radial-gradient(circle at top left, rgba(255,255,255,.65), transparent 30%), linear-gradient(135deg, rgba(133,183,235,.75), rgba(255,255,255,.35) 45%, rgba(55,138,221,.24))';
+    });
+
+    // Nav badge
+    document.querySelectorAll('.brand-badge').forEach(el => {
+      el.style.background = 'linear-gradient(135deg, rgba(255,255,255,.92), rgba(230,241,255,.88))';
+      el.style.border = '1px solid rgba(55,138,221,0.18)';
+    });
+    document.querySelectorAll('.brand-badge svg').forEach(el => {
+      el.style.color = '#378add';
+    });
+
+    // Dock badge
+    document.querySelectorAll('.dock-badge').forEach(el => {
+      el.style.background = 'linear-gradient(135deg, rgba(133,183,235,.8), rgba(255,255,255,.85))';
+      el.style.color = '#185fa5';
+    });
+
+    // Section labels (los "Podcast", "About", etc.)
+    document.querySelectorAll('.section-intro p, .about-panel > p, .contact-card > div > p').forEach(el => {
+      el.style.color = '#185fa5';
+    });
+
+    // Episode type pills
+    document.querySelectorAll('.episode-type').forEach(el => {
+      el.style.color = '#185fa5';
+    });
+
+    // Player pill
+    document.querySelectorAll('.player-pill').forEach(el => {
+      el.style.color = 'rgba(12,42,74,.75)';
+    });
+
+    // About callout
+    document.querySelectorAll('.about-callout').forEach(el => {
+      el.style.background = 'linear-gradient(180deg, rgba(255,255,255,.74), rgba(230,241,255,.72))';
+    });
+
+    // Ghost button
+    document.querySelectorAll('.ghost-btn').forEach(el => {
+      el.style.color = '#185fa5';
+    });
+
+    // Player blob color
+    document.querySelectorAll('.player-blob').forEach(el => {
+      el.style.background = 'linear-gradient(135deg, rgba(133,183,235,.82), rgba(255,255,255,.32))';
+    });
+
   } else {
+    // Restaurar TODO
     document.body.style.background = '';
     document.querySelector('.glow').style.background = '';
     document.querySelector('.glow-2').style.background = '';
@@ -1836,14 +1883,21 @@ heroTitle.addEventListener('click', () => {
     heroTitle.querySelector('span').style.backgroundClip = 'text';
     heroTitle.querySelector('span').style.color = 'transparent';
 
-    document.querySelectorAll('.btn, .play-btn, .mini-play, .dock-toggle').forEach(el => {
-      el.style.background = '';
-      el.style.boxShadow = '';
-    });
-
-    document.querySelectorAll('.progress-fill, .dock-line > div').forEach(el => {
-      el.style.background = '';
-    });
+    document.querySelectorAll('.btn').forEach(el => { el.style.background = ''; el.style.boxShadow = ''; });
+    document.querySelectorAll('.play-btn, .mini-play, .dock-toggle').forEach(el => { el.style.background = ''; el.style.boxShadow = ''; });
+    document.querySelectorAll('.progress-fill, .dock-line > div').forEach(el => { el.style.background = ''; });
+    document.querySelectorAll('.eyebrow').forEach(el => { el.style.color = ''; });
+    document.querySelectorAll('.sparkle').forEach(el => { el.style.background = ''; el.style.boxShadow = ''; });
+    document.querySelectorAll('.player-top').forEach(el => { el.style.background = ''; });
+    document.querySelectorAll('.brand-badge').forEach(el => { el.style.background = ''; el.style.border = ''; });
+    document.querySelectorAll('.brand-badge svg').forEach(el => { el.style.color = ''; });
+    document.querySelectorAll('.dock-badge').forEach(el => { el.style.background = ''; el.style.color = ''; });
+    document.querySelectorAll('.section-intro p, .about-panel > p, .contact-card > div > p').forEach(el => { el.style.color = ''; });
+    document.querySelectorAll('.episode-type').forEach(el => { el.style.color = ''; });
+    document.querySelectorAll('.player-pill').forEach(el => { el.style.color = ''; });
+    document.querySelectorAll('.about-callout').forEach(el => { el.style.background = ''; });
+    document.querySelectorAll('.ghost-btn').forEach(el => { el.style.color = ''; });
+    document.querySelectorAll('.player-blob').forEach(el => { el.style.background = ''; });
   }
 });
 
@@ -2002,6 +2056,44 @@ brandLabel.addEventListener('click', () => {
       toast.style.transform = 'translateX(-50%) translateY(10px)';
       setTimeout(() => toast.remove(), 400);
     }, 3000);
+  }
+});
+
+// EASTER EGG — Clic en Fabian Pacheco
+const integrantes = document.querySelectorAll('.contact-card div[style*="grid"] div');
+integrantes.forEach(el => {
+  if (el.textContent.trim().includes('Fabián Pacheco') || el.textContent.trim().includes('Fabian Pacheco')) {
+    el.style.cursor = 'pointer';
+    el.addEventListener('click', () => {
+      const toast = document.createElement('div');
+      toast.textContent = '👋 Hello, he is my creator!';
+      toast.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        z-index: 9999;
+        background: rgba(255,255,255,0.95);
+        border: 1px solid rgba(55,138,221,0.3);
+        border-radius: 24px;
+        padding: 24px 40px;
+        font-family: Inter, sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #185fa5;
+        box-shadow: 0 20px 60px rgba(55,138,221,0.2);
+        backdrop-filter: blur(16px);
+        transition: transform 0.5s cubic-bezier(.22,1,.36,1);
+        pointer-events: none;
+        white-space: nowrap;
+      `;
+      document.body.appendChild(toast);
+      requestAnimationFrame(() => toast.style.transform = 'translate(-50%, -50%) scale(1)');
+      setTimeout(() => {
+        toast.style.transform = 'translate(-50%, -50%) scale(0)';
+        setTimeout(() => toast.remove(), 500);
+      }, 3000);
+    });
   }
 });
 
